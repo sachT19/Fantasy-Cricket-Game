@@ -1,0 +1,417 @@
+#Sachleen Tuteja, Quester II, Fantasy Cricket Game, November - December 2020  NOTE: due to size limiations, everything is not drawn to scale
+#Sources: Canvas Python Graphics Tutorial, Stackoverflow
+#Number of SHAPES: 12
+
+from graphics import *
+import random
+import time
+
+global runs
+global wickets
+global runs2
+global wickets2
+global tossWinner
+
+runs = 0
+runs2 = 0
+wickets = 0
+wickets2 = 0
+#tossWinner = ["India", "Australia"]
+
+
+win = GraphWin("India Tour of Australia 2020", 800, 810)
+win.setBackground('grey')
+win.setCoords(0,0,500,500) #setting coordinates
+
+def beginningOfGame():
+    startGame = Entry(Point(250, 250),10)
+    startGame.draw(win)
+    gameText = Text(Point(250, 280),"Type 'Start' to begin") #start the game
+    gameText.setOutline('white')
+    gameText.draw(win)
+    win.getMouse()
+    time.sleep(2)
+    startGame.undraw() #so next screen can appear
+    gameText.undraw()
+    
+def teamNames():
+    #list of players and teams they are associated with. Squads based on 3rd ODI between India and Australia this November
+    teamsRectangle = Rectangle(Point(180,160), Point(320,340))
+    teamsRectangle.draw(win)
+    teamsListIndia = Text(Point(250, 250), "Team India:\n\nShikhar Dhawan\nShubman Gill\nVirat Kohli (C)\nShreyas Iyer\nK.L. Rahul (W)\nHardik Pandya\nRavindra Jadeja\nJasprit Bumrah\nT. Natarajan\nShardul Thakur\nKuldeep Yadav")
+    teamsListIndia.setOutline('white')
+    teamsListIndia.draw(win) #India's playing XI
+    time.sleep(4)
+    teamsListIndia.undraw()
+    teamsListAustralia = Text(Point(250, 250), "Team Australia:\n\nMarnus Labuschagne\nAaron Finch (C)\nSteve Smith\nMoises Henriques\nCameron Green\nAlex Carey (W)\nGlenn Maxwell\nAshton Agar\nSean Abbott\nAdam Zampa\nJosh Hazlewood")
+    teamsListAustralia.setOutline('white')
+    teamsListAustralia.draw(win) #Australia's playing XI
+    time.sleep(4)
+    teamsListAustralia.undraw()
+    teamsRectangle.undraw()
+    
+def createGround():
+    #create/draw cricket ground to play
+    cricketGroundPoint = Point(255,255) #draw ground/outer circle
+    cricketGroundCircle = Circle(cricketGroundPoint, 200)
+    cricketGroundCircle.setOutline('black')
+    cricketGroundCircle.setFill('light green')
+    cricketGroundCircle.setWidth(2)
+    cricketGroundCircle.draw(win)
+
+    cricketPitch = Rectangle(Point(300,400), cricketGroundPoint) #draw pitch/rectangle in outer circle
+    cricketPitch.move(-25,-75)
+    cricketPitch.setOutline('tan')
+    cricketPitch.setFill('tan')
+    cricketPitch.setWidth(2.5)
+    cricketPitch.draw(win)
+
+    cricketWicket1 = Line(Point(250,320), Point(250,330)) #draw cricket wickets/lines on pitch
+    cricketWicket1.setFill('white')
+    cricketWicket1.setWidth(3)
+    cricketWicket1.draw(win)
+
+    cricketWicket2 = Line(Point(253.1,320), Point(253.1,330)) #draw cricket wickets/lines on pitch
+    cricketWicket2.setFill('white')
+    cricketWicket2.setWidth(3)
+    cricketWicket2.draw(win)
+
+    cricketWicket3 = Line(Point(256,320), Point(256,330)) #draw cricket wickets/lines on pitch
+    cricketWicket3.setFill('white')
+    cricketWicket3.setWidth(3)
+    cricketWicket3.draw(win)
+
+    cricketWicket1 = Line(Point(250,180), Point(250,190)) #draw cricket wickets/lines on pitch
+    cricketWicket1.setFill('white')
+    cricketWicket1.setWidth(3)
+    cricketWicket1.draw(win)
+
+    cricketWicket2 = Line(Point(253.1,180), Point(253.1,190)) #draw cricket wickets/lines on pitch
+    cricketWicket2.setFill('white')
+    cricketWicket2.setWidth(3)
+    cricketWicket2.draw(win)
+
+    cricketWicket3 = Line(Point(256,180), Point(256,190)) #draw cricket wickets/lines on pitch
+    cricketWicket3.setFill('white')
+    cricketWicket3.setWidth(3)
+    cricketWicket3.draw(win)
+
+    cricketCrease1 = Line(Point(230,310), Point(275,310)) #draw cricket creases/lines on pitch
+    cricketCrease1.setFill('white')
+    cricketCrease1.setWidth(3)
+    cricketCrease1.draw(win)
+
+    cricketCrease2 = Line(Point(230,195), Point(275,195)) #draw cricket creases/lines on pitch
+    cricketCrease2.setFill('white')
+    cricketCrease2.setWidth(3)
+    cricketCrease2.draw(win)
+
+def randomToss():
+    #random toss and results
+    global tossWinner
+    tossCoinImage = Image(Point(250,250), 'tosscoin.png')
+    tossCoinImage.draw(win)
+    tossChoice = Entry(Point(win.getWidth()/2, 250), 10)
+    tossChoice.draw(win)
+    choiceText = Text(Point(win.getWidth()/2, 280),"Call Heads or Tails")
+    choiceText.setOutline('white')
+    choiceText.draw(win)
+    win.getMouse()
+    time.sleep(2)
+    call = tossChoice.getText()
+    randomTossCall = ["heads", "tails"]
+    randomTossWinner = ["India", "Australia"]
+    randomTossBorB = ["bat", "bowl"]
+    tossWinner = random.choice(randomTossWinner)
+    BorB = random.choice(randomTossBorB)
+    displayCall = Text(Point(260, 120), tossWinner + " called " + random.choice(randomTossCall) + " and won the toss. They chose to " + BorB + ". \nGood luck to both teams!")
+    displayCall.setOutline('white')
+    displayCall.draw(win)
+    time.sleep(3)
+    tossCoinImage.undraw()
+    choiceText.undraw()
+    tossChoice.undraw()
+    displayCall.undraw()
+
+    time.sleep(1)
+
+    if tossWinner == "India" and BorB == "bat": #if India wins toss and choses to bat, playing XI given and user told to input opener's name
+        teamsListIndia = Text(Point(330, 250), "Team India:\n\nShikhar Dhawan\nShubman Gill\nVirat Kohli (C)\nShreyas Iyer\nK.L. Rahul (W)\nHardik Pandya\nRavindra Jadeja\nJasprit Bumrah\nT. Natarajan\nShardul Thakur\nKuldeep Yadav")
+        teamsListIndia.setOutline('black')
+        teamsListIndia.draw(win)
+        time.sleep(3)
+        teamsListIndia.undraw()
+        Batting = Entry(Point(250, 250),10)
+        Batting.draw(win)
+        battingText = Text(Point(250, 280),"Choose an opener for today's match")
+        battingText.setOutline('black')
+        battingText.draw(win)
+        win.getMouse()
+        time.sleep(1)
+        Batting.undraw()
+        battingText.undraw()
+        Batting = Batting.getText()
+        displayBatting = Text(Point(250,280), Batting + " will be opening for India today.")
+        displayBatting.draw(win)
+        time.sleep(2)
+        displayBatting.undraw()
+        
+    elif tossWinner == "Australia" and BorB == "bat": #if Australia wins toss and choses to bat, playing XI given and user told to input opener's name
+        teamsListAustralia = Text(Point(330, 250), "Team Australia:\n\nMarnus Labuschagne\nAaron Finch (C)\nSteve Smith\nMoises Henriques\nCameron Green\nAlex Carey (W)\nGlenn Maxwell\nAshton Agar\nSean Abbott\nAdam Zampa\nJosh Hazlewood")
+        teamsListAustralia.setOutline('black')
+        teamsListAustralia.draw(win)
+        time.sleep(4)
+        teamsListAustralia.undraw()
+        Batting = Entry(Point(250, 250),10)
+        Batting.draw(win)
+        battingText = Text(Point(250, 280),"Choose an opener for today's match")
+        battingText.setOutline('black')
+        battingText.draw(win)
+        win.getMouse()
+        time.sleep(1)
+        Batting.undraw()
+        battingText.undraw()
+        Batting = Batting.getText()
+        displayBatting = Text(Point(250,280), Batting + " will be opening for Australia today.")
+        displayBatting.draw(win)
+        time.sleep(2)
+        displayBatting.undraw()
+
+def drawBatsman(): #batsman drawn at crease
+    batsmanImage = Image(Point(260,320), 'batsman.png')
+    batsmanImage.draw(win)
+        
+def innings1():
+    for i in range(6):
+        ball = Circle(Point(220,170), 4)
+        bowlerImage = Image(Point(225,145), 'bowler.png')
+        ball.setWidth(3)
+        ball.draw(win)
+        bowlerImage.draw(win)
+        def FourI1(): #4 runs given when ball hit if it goes to boundary
+            global runs
+            win.getMouse()
+            for i in range(5):
+                ball.move(39,8)
+                time.sleep(.15)
+            runs += 4
+            scoreBoard = Text(Point(250,115), str(runs) + " - " + str(wickets))
+            scoreBoard.undraw()
+            time.sleep(0.5)
+            scoreBoard.draw(win)
+            time.sleep(1)
+            scoreBoard.undraw()
+            bowlerImage.undraw()
+            ball.undraw()
+
+        def SixI1(): #6 runs given when ball goes outside of boundary
+            global runs
+            win.getMouse()
+            for i in range(5):
+                ball.move(45,-30)
+                time.sleep(.15)
+            runs += 6
+            scoreBoard = Text(Point(250,115), str(runs) + " - " + str(wickets))
+            scoreBoard.undraw()
+            time.sleep(0.5)
+            scoreBoard.draw(win)
+            time.sleep(1)
+            scoreBoard.undraw()
+            bowlerImage.undraw()
+            ball.undraw()
+
+        def WicketI1(): #wicket taken when ball hits back stumps
+            global wickets
+            win.getMouse()
+            for i in range(5):
+                ball.move(2,5)
+                time.sleep(.15)
+            wickets += 1
+            scoreBoard = Text(Point(250,115), str(runs) + " - " + str(wickets))
+            scoreBoard.undraw()
+            time.sleep(0.5)
+            scoreBoard.draw(win)
+            time.sleep(1)
+            scoreBoard.undraw()
+            bowlerImage.undraw()
+            ball.undraw()
+            
+        for i in range(10): #bowler runs to crease
+            bowlerImage.move(0,7)
+            ball.move(0,7)
+            time.sleep(.15)
+        time.sleep(.05)
+        
+        def ballTypeYorker(): #ball type - yorker
+            for i in range(5):
+                ball.move(3,12)
+                time.sleep(.15)
+            randomRunType = [FourI1, SixI1, WicketI1]
+            random.choice(randomRunType)()
+            bowlerImage.undraw()
+            ball.undraw()
+            
+        def ballTypeBouncer(): #ball type - bouncer
+            for i in range(5):
+                ball.move(3,12)
+                time.sleep(.15)
+            randomRunType = [FourI1, SixI1, WicketI1]
+            random.choice(randomRunType)()
+            bowlerImage.undraw()
+            ball.undraw()
+            
+        def ballTypeOutSwinger(): #ball type - out swinger
+            for i in range(5):
+                ball.move(4,7)
+                time.sleep(.15)
+            randomRunType = [FourI1, SixI1, WicketI1]
+            random.choice(randomRunType)()
+            
+        randomBallType = [ballTypeYorker, ballTypeBouncer, ballTypeOutSwinger]
+        random.choice(randomBallType)()
+        time.sleep(1.5)
+     
+    scoreBoard = Text(Point(250,115), str(runs) + " - " + str(wickets))
+    scoreBoard.draw(win)
+    time.sleep(2)
+    scoreBoard.undraw()
+    
+def innings2():
+    for i in range(6):
+        ball = Circle(Point(220,170), 4)
+        bowlerImage = Image(Point(225,145), 'bowler.png')
+        ball.setWidth(3)
+        ball.draw(win)
+        bowlerImage.draw(win)
+        def FourI2(): #4 runs given when ball hit if it goes to boundary
+            global runs2
+            win.getMouse()
+            for i in range(5):
+                ball.move(39,8)
+                time.sleep(.15)
+            runs2 += 4
+            scoreBoard = Text(Point(250,115), str(runs2) + " - " + str(wickets2))
+            scoreBoard.undraw()
+            time.sleep(0.5)
+            scoreBoard.draw(win)
+            time.sleep(1)
+            scoreBoard.undraw()
+            bowlerImage.undraw()
+            ball.undraw()
+
+        def SixI2(): #6 runs given when ball goes outside of boundary
+            global runs2
+            win.getMouse()
+            for i in range(5):
+                ball.move(45,-30)
+                time.sleep(.15)
+            runs2 += 6
+            scoreBoard = Text(Point(250,115), str(runs2) + " - " + str(wickets2))
+            scoreBoard.undraw()
+            time.sleep(0.5)
+            scoreBoard.draw(win)
+            time.sleep(1)
+            scoreBoard.undraw()
+            bowlerImage.undraw()
+            ball.undraw()
+
+        def WicketI2(): #wicket taken when ball hits back stumps
+            global wickets2
+            win.getMouse()
+            for i in range(5):
+                ball.move(2,5)
+                time.sleep(.15)
+            wickets2 += 1
+            scoreBoard = Text(Point(250,115), str(runs2) + " - " + str(wickets2))
+            scoreBoard.undraw()
+            time.sleep(0.5)
+            scoreBoard.draw(win)
+            time.sleep(1)
+            scoreBoard.undraw()
+            bowlerImage.undraw()
+            ball.undraw()
+            
+        for i in range(10): #bowler runs to crease
+            bowlerImage.move(0,7)
+            ball.move(0,7)
+            time.sleep(.15)
+        time.sleep(.05)
+        def ballTypeYorker(): #ball type - yorker
+            for i in range(5):
+                ball.move(3,12)
+                time.sleep(.15)
+            randomRunType = [FourI2, SixI2, WicketI2]
+            random.choice(randomRunType)()
+            
+        def ballTypeBouncer(): #ball type - bouncer
+            for i in range(5):
+                ball.move(3,12)
+                time.sleep(.15)
+            randomRunType = [FourI2, SixI2, WicketI2]
+            random.choice(randomRunType)()
+            
+        def ballTypeOutSwinger(): #ball type - out swinger
+            for i in range(5):
+                ball.move(4,7)
+                time.sleep(.15)
+            randomRunType = [FourI2, SixI2, WicketI2]
+            random.choice(randomRunType)()
+            
+        randomBallType = [ballTypeYorker, ballTypeBouncer, ballTypeOutSwinger]
+        random.choice(randomBallType)()
+        time.sleep(1.5)
+        bowlerImage.undraw()
+        ball.undraw()
+        
+    scoreBoard = Text(Point(250,115), str(runs) + " - " + str(wickets))
+    scoreBoard.draw(win)
+    time.sleep(2)
+    scoreBoard.undraw()
+    
+
+beginningOfGame()
+teamNames()
+createGround()
+time.sleep(2)
+randomToss()
+drawBatsman()
+innings1()
+midInnings = Text(Point(250,115), "What an amazing knock by the team! Time for the Mid-Innings Break! See you in a bit!")
+midInnings.draw(win)
+time.sleep(2)
+midInnings.undraw()
+time.sleep(2)
+afterInning1 = Text(Point(250,115), "Welcome back to the 3rd ODI in India's Tour of Australia! Time for the second innings!")
+afterInning1.draw(win)
+time.sleep(2)
+afterInning1.undraw()
+
+innings2()
+
+if runs > runs2:
+    Text(Point(250,115), "And that's it - Game over. Congratulations to " + tossWinner + " !").draw(win)
+elif runs2 > runs:
+    Text(Point(250,115), "And that's it - Game over. " + tossWinner + " tried their best, but ultimately they were beaten.").draw(win)
+elif runs == runs2:
+    Text(Point(250,115), "Oh, and we have a tie. What a game!").draw(win)
+
+win.getMouse()
+win.close()
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+
+
+
